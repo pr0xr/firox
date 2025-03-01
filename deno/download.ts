@@ -17,6 +17,7 @@ const FILES = [
   { url: "https://caido.download/releases/v0.46.0/caido-cli-v0.46.0-linux-x86_64.tar.gz", name: "caido-cli-v0.46.0-linux-x86_64.tar.gz", executable: "caido-cli" },
   { url: "https://github.com/roapi/roapi/releases/download/roapi-v0.12.4/roapi-x86_64-unknown-linux-musl.tar.gz", name: "roapi-x86_64-unknown-linux-musl.tar.gz", executable: "roapi" },
   { url: "https://github.com/projectdiscovery/subfinder/releases/download/v2.7.0/subfinder_2.7.0_linux_amd64.zip", name: "subfinder_2.7.0_linux_amd64.zip", executable: "subfinder" },
+  { url: "https://github.com/projectdiscovery/httpx/releases/download/v1.6.10/httpx_1.6.10_linux_amd64.zip", name: "httpx_1.6.10_linux_amd64.zip", executable: "httpx" },
 ];
 
 async function downloadFile(url: string, outputPath: string) {
@@ -62,10 +63,11 @@ async function postDownload(filePath: string, executableName: string) {
         await entry.readable.pipeTo(outputFile.writable);
       }
     }
-    //file.close();
     await Deno.remove(filePath);
   } else if (filePath.endsWith(".zip")) {
-    await zip.extract(filePath, extractPath);
+    const fileData = await Deno.readFile(filePath);
+    const data = await zip.extract(fileData);
+    await Deno.writeFile(executableName, data)
     await Deno.remove(filePath);
   }
   
@@ -75,11 +77,15 @@ async function postDownload(filePath: string, executableName: string) {
 }
 
 for (const file of FILES) {
-  const outputPath = join(BIN_DIR, file.name);
-  console.log(`Downloading ${file.url} to ${outputPath}`);
-  await downloadFile(file.url, outputPath);
-  await postDownload(outputPath, file.executable);
-  console.log(`Processed ${file.name}`);
+  const outputPath = join(BIN_DIR, file.executable);
+  if (await Deno.stat(outputPath).catch(() => false)) {
+    console.log(`File ${outputPath} already exists, skipping download.`);
+  } else {
+    console.log(`Downloading ${file.url} to ${outputPath}`);
+    await downloadFile(file.url, outputPath);
+    await postDownload(outputPath, file.executable);
+    console.log(`Processed ${file.name}`);
+  }
 }
 
 console.log("All files downloaded and processed successfully.");

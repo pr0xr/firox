@@ -20,3 +20,7 @@ By using this software, you acknowledge and agree to these terms. If you do not 
 
 ---
   [![Open in plane.so](https://badgers.space/badge/plane.so/view%20project?icon=eva-paper-plane)](https://app.plane.so/strl/projects/a7d7611c-68f6-43e2-a690-8e5f751b7efa/issues)
+  [![Open in plane.so](https://badgers.space/badge/plane.so/bugs?icon=eva-paper-plane)](https://app.plane.so/strl/projects/4e753644-ebaa-4645-81ae-472ec861f080/issues)
+  
+
+

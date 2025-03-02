@@ -34,7 +34,6 @@ async function downloadFile(url: string, outputPath: string) {
   const reader = response.body?.getReader();
   if (!reader) throw new Error("Failed to get reader from response body");
 
-  const decoder = new TextDecoder();
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
@@ -66,8 +65,15 @@ async function postDownload(filePath: string, executableName: string) {
     await Deno.remove(filePath);
   } else if (filePath.endsWith(".zip")) {
     const fileData = await Deno.readFile(filePath);
-    const data = await zip.extract(fileData);
-    await Deno.writeFile(executableName, data)
+    const extractedFiles = await zip.extract(fileData);
+    for (const { name, data } of extractedFiles) {
+      if (name !== executableName) continue;
+      const outputPath = join(extractPath, name);
+      await Deno.mkdir(dirname(outputPath), { recursive: true });
+      await Deno.writeFile(outputPath, data);
+      console.log(`Extracted: ${outputPath}`);
+    }
+
     await Deno.remove(filePath);
   }
   
@@ -77,9 +83,10 @@ async function postDownload(filePath: string, executableName: string) {
 }
 
 for (const file of FILES) {
-  const outputPath = join(BIN_DIR, file.executable);
-  if (await Deno.stat(outputPath).catch(() => false)) {
-    console.log(`File ${outputPath} already exists, skipping download.`);
+  const outputPath = join(BIN_DIR, file.name);
+  const executablePath = join(BIN_DIR, file.executable);
+  if (await Deno.stat(executablePath).catch(() => false)) {
+    console.log(`File ${executablePath} already exists, skipping download.`);
   } else {
     console.log(`Downloading ${file.url} to ${outputPath}`);
     await downloadFile(file.url, outputPath);

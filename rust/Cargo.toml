@@ -1,4 +1,4 @@
 [workspace]
 resolver = "2"
 
-members = ["crates/*", "lib/x/cve/*/*/exploit"]
+members = ["crates/*", "lib/nimrod", "lib/x/cve/*/*/exploit"]

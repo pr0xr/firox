@@ -14,7 +14,7 @@ await ensureDir(BIN_DIR);
 
 const FILES = [
   { url: "https://github.com/epi052/feroxbuster/releases/download/v2.11.0/x86_64-linux-feroxbuster.tar.gz", name: "x86_64-linux-feroxbuster.tar.gz", executable: "feroxbuster" },
-  { url: "https://caido.download/releases/v0.46.0/caido-cli-v0.49.0-linux-x86_64.tar.gz", name: "caido-cli-v0.49.0-linux-x86_64.tar.gz", executable: "caido-cli" },
+  { url: "https://caido.download/releases/v0.49.0/caido-cli-v0.49.0-linux-x86_64.tar.gz", name: "caido-cli-v0.49.0-linux-x86_64.tar.gz", executable: "caido-cli" },
   { url: "https://github.com/roapi/roapi/releases/download/roapi-v0.12.6/roapi-x86_64-unknown-linux-musl.tar.gz", name: "roapi-x86_64-unknown-linux-musl.tar.gz", executable: "roapi" },
   { url: "https://github.com/projectdiscovery/subfinder/releases/download/v2.8.0/subfinder_2.8.0_linux_amd64.zip", name: "subfinder_2.8.0_linux_amd64.zip", executable: "subfinder" },
   { url: "https://github.com/projectdiscovery/httpx/releases/download/v1.6.10/httpx_1.6.10_linux_amd64.zip", name: "httpx_1.6.10_linux_amd64.zip", executable: "httpx" },

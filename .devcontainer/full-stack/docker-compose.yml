@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces/firox:cached
+      - /var/run/docker.sock:/var/run/docker-host.sock
+    command: sleep infinity
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker-host.sock
+    networks:
+      - firox-network
+
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: firox
+    networks:
+      - firox-network
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - firox-network
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  firox-network:
+    driver: bridge

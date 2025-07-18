@@ -1,0 +1,48 @@
+{
+  "name": "Firox - Rust Development",
+  "image": "mcr.microsoft.com/devcontainers/rust:1-1-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "vadimcn.vscode-lldb",
+        "serayuzgur.crates",
+        "tamasfe.even-better-toml",
+        "GitHub.copilot",
+        "ms-vscode.hexeditor"
+      ],
+      "settings": {
+        "rust-analyzer.linkedProjects": ["./rust/Cargo.toml"],
+        "rust-analyzer.cargo.features": "all",
+        "rust-analyzer.checkOnSave.command": "clippy"
+      }
+    }
+  },
+
+  "onCreateCommand": "rustup component add clippy rustfmt && cargo install cargo-watch cargo-edit cargo-audit",
+
+  "postCreateCommand": "cd rust && cargo check",
+
+  "forwardPorts": [8080, 9000],
+
+  "remoteUser": "vscode",
+
+  "workspaceFolder": "/workspaces/firox"
+}

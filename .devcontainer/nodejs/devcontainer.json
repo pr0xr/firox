@@ -1,0 +1,51 @@
+{
+  "name": "Firox - Node.js/TypeScript Development",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "denoland.vscode-deno",
+        "oven.bun-vscode",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "GitHub.copilot",
+        "ms-vscode.vscode-json"
+      ],
+      "settings": {
+        "deno.enable": false,
+        "deno.enablePaths": ["./deno"],
+        "typescript.preferences.includePackageJsonAutoImports": "auto",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+
+  "onCreateCommand": "curl -fsSL https://bun.sh/install | bash && curl -fsSL https://deno.land/install.sh | sh",
+
+  "postCreateCommand": "echo 'Node.js, Bun, and Deno development environment ready!'",
+
+  "forwardPorts": [3000, 5173, 8080],
+
+  "remoteUser": "vscode",
+
+  "workspaceFolder": "/workspaces/firox"
+}

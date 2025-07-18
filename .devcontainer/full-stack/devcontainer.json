@@ -1,0 +1,34 @@
+{
+  "name": "Firox - Full Stack with Services",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/firox",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "ms-vscode.vscode-typescript-next",
+        "denoland.vscode-deno",
+        "oven.bun-vscode",
+        "GitHub.copilot",
+        "ms-vscode.hexeditor",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "rust-analyzer.linkedProjects": ["./rust/Cargo.toml"],
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.ruffEnabled": true,
+        "deno.enablePaths": ["./deno"]
+      }
+    }
+  },
+
+  "forwardPorts": [3000, 5432, 6379, 8000, 8080],
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "remoteUser": "vscode"
+}

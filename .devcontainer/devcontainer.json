@@ -1,0 +1,79 @@
+{
+  "name": "Firox Multi-Language Development",
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest",
+      "profile": "default"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "nodeGypDependencies": true
+    },
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-python.python",
+        "ms-python.flake8",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "ms-vscode.vscode-typescript-next",
+        "denoland.vscode-deno",
+        "oven.bun-vscode",
+        "GitHub.copilot",
+        "ms-vscode.hexeditor",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode.makefile-tools",
+        "vadimcn.vscode-lldb",
+        "serayuzgur.crates",
+        "tamasfe.even-better-toml"
+      ],
+      "settings": {
+        "rust-analyzer.linkedProjects": ["./rust/Cargo.toml"],
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.ruffEnabled": true,
+        "python.formatting.provider": "black",
+        "deno.enable": false,
+        "deno.enablePaths": ["./deno"],
+        "typescript.preferences.includePackageJsonAutoImports": "auto"
+      }
+    }
+  },
+
+  "onCreateCommand": "bash .devcontainer/setup.sh",
+
+  "postCreateCommand": "echo 'Welcome to Firox development environment! 🦀🐍⚡'",
+
+  "forwardPorts": [3000, 8000, 8080, 9000],
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/.devcontainer/cache,target=/home/vscode/.cache,type=bind,consistency=cached"
+  ],
+
+  "remoteUser": "vscode",
+
+  "workspaceFolder": "/workspaces/firox"
+}
